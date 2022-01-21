@@ -1,0 +1,141 @@
+<%@ page import="java.sql.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="javax.mail.*" %>
+<%@ page import="javax.mail.internet.*" %>
+<%@ page import="javax.activation.*" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <!-- <link rel="stylesheet" href="style/payment.css"> -->
+	<style>
+		*{
+    background-image: url("img25e.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    font-size:23px;
+    color:black;
+    
+    
+}
+
+h2{
+    font-size: 32px;
+}
+
+body{
+    margin: 15px 30px;
+    padding:8px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.container{
+    background-color: #f2f2f2;
+    padding:5px 20px 15px 20px;
+    border: 1px solid lightgray ;
+    border-radius: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="date"],
+select,
+textarea{
+    width:22%;
+    padding:12px;
+    border:1px solid;
+    border-radius: 5px;
+}
+
+input[type="submit"]{
+    background-color: lightslategray;
+    color:black;
+    padding:10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover{
+    background-color: #4caf84;
+}
+
+
+	</style>
+</head>
+<body>
+    <div class="container">
+    <h2>Payment Details</h2>
+    <hr>
+    <form>
+        Full Name:&nbsp;&nbsp;<input type="text" name="name" id="na" placeholder="Enter your Name" required><br><br>
+        Email: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="email" name="em" id="email" placeholder="Enter your Email-id" required><br><br>
+        Contact No: <input type="number" name="phone" id="no" placeholder="Enter your Contact No." required><br><br>        
+        Amount: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" name="amount" id="amt" placeholder="Enter Amount" required><br><br>
+        Payment Type:
+        <select name="payment_type" id="payment_type" required>
+            <option value="">--Select a Payment Type--</option>
+            <option value="upi">UPI</option>
+            <option value="netbanking">Netbanking</option>
+            <option value="card">Card</option>
+        </select><br><br>
+        <input type="submit" value="Pay Now" name="b1">
+    </form>
+    </div>
+
+
+    <%
+		if (request.getParameter("b1") != null) {
+			String name = request.getParameter("name");
+			String em = request.getParameter("em");
+			int phone = Integer.parseInt(request.getParameter("phone"));
+			int amount = Integer.parseInt(request.getParameter("amount"));
+
+			try {
+				DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "abc123");
+				String sql = "insert into payment_tsf values(?,?,?,?)";
+				PreparedStatement pst = con.prepareStatement(sql);
+				pst.setString(1, name);
+                pst.setString(2, em);
+                pst.setInt(3, phone);
+                pst.setInt(4, amount);
+				pst.executeUpdate();
+				out.println("Thankyou!");
+
+				Properties p = System.getProperties();
+				p.put("mail.smtp.host", "smtp.gmail.com");
+				p.put("mail.smtp.port", "587");
+				p.put("mail.smtp.auth", "true");
+				p.put("mail.smtp.starttls.enable", true);
+
+				Session ms = Session.getInstance(p, new Authenticator() {
+					public PasswordAuthentication getPasswordAuthentication () {
+						return new PasswordAuthentication("xyzproject2201@gmail.com", "pro@2201"); 
+					}
+				});
+
+				try {
+					MimeMessage msg = new MimeMessage(ms);
+					msg.setSubject("Old Age Home Donation");
+					msg.setText("Thanks for your contribution...!" + amount +"successfully donated");
+					msg.addRecipient(Message.RecipientType.TO, new InternetAddress(request.getParameter("em")));
+					Transport.send(msg);
+					out.println("Thanks......!!!");
+				} catch (Exception e) {
+					out.println("issue" + e);
+				}
+				con.close();
+		}catch(SQLException e) {
+			out.println(em + "already registered");
+			out.println("---> "+ e);
+		}
+		}
+	%>
+</body>
+</html>

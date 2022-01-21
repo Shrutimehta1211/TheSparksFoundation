@@ -1,0 +1,16 @@
+.contact{
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+    padding-top: 5px;
+    font-family: "-webkit-pictograph";
+    text-align: center;
+    background: url('./img/c1.jpg')no-repeat;
+    
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+        
+    
+  }

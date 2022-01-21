@@ -1,0 +1,18 @@
+.about{
+    margin: 0;
+    padding: 0;
+    margin-top: 5px;
+    padding-top: 5px;
+    font-family: "-webkit-pictograph";
+    text-align: center;
+    background: url('https://images.pexels.com/photos/6647175/pexels-photo-6647175.jpeg?cs=srgb&dl=pexels-rodnae-productions-6647175.jpg&fm=jpg')no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+        min-height: 100vh;
+    
+  }
+.about{
+  color:rgb(233, 137, 13);
+  font-weight: bold;
+}

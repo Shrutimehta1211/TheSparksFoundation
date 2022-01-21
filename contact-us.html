@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact-us.css">
+    <link rel="stylesheet" href="./style/style.css">
+
+    <title>Contact Us</title>
+</head>
+<body>
+    <nav class="navbar background">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <ul class="nav-list">
+
+            <li><a class="active" href="index.html" ><b>Home</b> </a></li>
+            <li><a href="about_us.html" ><b>About Us</b> </a></li>
+            <li><a href="contact-us.html"><b>Contact Us</b></a></li>
+        </ul>
+
+        </div>
+    </nav>
+   
+    <form class="contact" action="backend.php">
+        <div>
+         Name: <input type="text"> 
+        </div>
+        <br>
+
+        <div>
+            Email: <input type="email" name="myEmail">
+        </div>
+         <br>
+           
+            <div>
+            Gender: Male <input type="radio" name="myGender"> Female <input type="radio" name="myGender"> Other<input type="radio" name="myGender">
+            </div>
+            <br>
+            <div>
+                Type message: <br> <textarea name="myText"  cols="40" rows="7"></textarea>
+            </div>
+            <br>
+    
+
+            <div> 
+                <input type="submit" value="Submit Now">
+            </div>
+            <br>
+
+        </form>
+</body>
+</html>
